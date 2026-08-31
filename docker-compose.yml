@@ -1,0 +1,64 @@
+
+
+services:
+  proxy:
+    image: belyy123/quickheladotriple-proxy:v1
+    build: ./proxy
+    ports:
+      - "8888:80"
+    networks:
+      - red_acceso
+      - red_aplicacion
+    depends_on:
+      - frontend
+      - backend
+
+  frontend:
+    image: belyy123/quickheladotriple-frontend:v1
+    build: ./frontend
+    networks:
+      - red_acceso
+
+  backend:
+    image: belyy123/quickheladotriple-backend:v1
+    build: ./backend
+    environment:
+      DB_HOST: db
+      DB_USER: quickuser
+      DB_PASSWORD: quickpassword
+      DB_NAME: tienda
+    networks:
+      - red_aplicacion
+      - red_datos
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tienda
+      MYSQL_USER: quickuser
+      MYSQL_PASSWORD: quickpassword
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - red_datos
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+networks:
+  red_acceso:
+    driver: bridge
+  red_aplicacion:
+    driver: bridge
+  red_datos:
+    driver: bridge
+
+volumes:
+  db_data:

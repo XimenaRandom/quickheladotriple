@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>HeladoTriple - Sistema de Productos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>HeladoTriple - Dashboard & Catálogo</h1>
+
+  <div class="grid">
+    <div class="card"><h3>Total Productos</h3><p id="totalProd">-</p></div>
+    <div class="card"><h3>Precio Promedio</h3><p id="promedio">-</p></div>
+    <div class="card"><h3>Stock Total</h3><p id="stockTotal">-</p></div>
+    <div class="card"><h3>Más Económico</h3><p id="masEco">-</p></div>
+    <div class="card"><h3>Más Costoso</h3><p id="masCaro">-</p></div>
+  </div>
+
+  <div class="flex">
+    <div>
+      <h2>Top 3 Más Económicos</h2>
+      <ul id="listEco"></ul>
+    </div>
+    <div>
+      <h2>Top 5 Más Vendidos</h2>
+      <ul id="listVendidos"></ul>
+    </div>
+  </div>
+
+  <h2>Catálogo Completo</h2>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Vendidos</th></tr>
+    </thead>
+    <tbody id="tablaProductos"></tbody>
+  </table>
+
+  <script src="script.js"></script>
+</body>
+</html>
